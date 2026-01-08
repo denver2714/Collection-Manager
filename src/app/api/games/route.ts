@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAllGames, createGame } from "../../../../services/gamesService";
 import { HTTP_STATUS } from "../../../../lib/httpStatus";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
@@ -8,6 +9,7 @@ export async function GET() {
     return NextResponse.json(getGamesData, { status: HTTP_STATUS.OK });
   } catch (error) {
     console.error("GET HTTP method error: ", error);
+    revalidatePath("/games");
     return NextResponse.json(
       { message: "Get games not found" },
       { status: HTTP_STATUS.NOT_FOUND }
@@ -22,6 +24,7 @@ export async function POST(req: Request) {
     return NextResponse.json(createGameData, { status: HTTP_STATUS.CREATED });
   } catch (error) {
     console.error("POST HTTP method error: ", error);
+    revalidatePath("/games");
     return NextResponse.json(
       { message: "Create game failed" },
       { status: HTTP_STATUS.INTERNAL_SERVER_ERROR }
