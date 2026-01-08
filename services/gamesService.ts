@@ -11,10 +11,11 @@ export async function getAllGames() {
 
 export async function createGame(game: {
   name: string;
+  image: string;
   genre: string;
   releaseDate: string;
 }) {
-  if (!game.name || !game.genre || !game.releaseDate)
+  if (!game.name || !game.image || !game.genre || !game.releaseDate)
     throw { status: 400, message: "Missing required fields" };
 
   const exists = await prisma.game.findFirst({
@@ -26,8 +27,9 @@ export async function createGame(game: {
   const createGame = await prisma.game.create({
     data: {
       name: game.name,
+      image: game.image,
       genre: game.genre,
-      releaseDate: game.releaseDate,
+      releaseDate: new Date(game.releaseDate),
     },
   });
 

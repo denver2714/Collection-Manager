@@ -10,9 +10,11 @@ datasource db {
   provider = "sqlite"
 }
 
+
 model Game {
   id Int @id @default(autoincrement())
   name String
+  image String
   genre String
   releaseDate DateTime
   createdAt DateTime @default(now())
