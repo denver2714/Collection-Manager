@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { HTTP_STATUS } from "../../../../../lib/httpStatus";
+import { HTTP_STATUS } from "../../../../../utils/httpStatus";
 import {
   getGame,
   editGame,
