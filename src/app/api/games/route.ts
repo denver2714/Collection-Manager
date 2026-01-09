@@ -9,7 +9,6 @@ export async function GET() {
     return NextResponse.json(getGamesData, { status: HTTP_STATUS.OK });
   } catch (error) {
     console.error("GET HTTP method error: ", error);
-    revalidatePath("/games");
     return NextResponse.json(
       { message: "Get games not found" },
       { status: HTTP_STATUS.NOT_FOUND }

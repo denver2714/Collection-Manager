@@ -9,6 +9,14 @@ export async function getAllGames() {
   return games;
 }
 
+export async function getGame(gameId: number) {
+  const getGame = await prisma.game.findUnique({
+    where: { id: gameId },
+  });
+
+  return getGame;
+}
+
 export async function createGame(game: {
   name: string;
   image: string;
@@ -34,4 +42,40 @@ export async function createGame(game: {
   });
 
   return createGame;
+}
+
+export async function editGame(
+  game: {
+    name: string;
+    image: string;
+    genre: string;
+    releaseDate: string;
+  },
+  id: number
+) {
+  const editGame = await prisma.game.update({
+    where: { id: id },
+    data: {
+      name: game.name,
+      image: game.image,
+      genre: game.genre,
+      releaseDate: new Date(game.releaseDate),
+    },
+  });
+
+  return editGame;
+}
+
+export async function deleteGame(id: number) {
+  const game = await prisma.game.findUnique({
+    where: { id },
+  });
+
+  if (!game) return null;
+
+  const deletedGame = await prisma.game.delete({
+    where: { id },
+  });
+
+  return game;
 }
