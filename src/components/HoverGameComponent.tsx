@@ -1,17 +1,29 @@
+"use client";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 
 type HoverGameComponentProps = {
   game: {
     name: string;
     image: string;
     genre: string;
-    releaseDate: Date;
+    releaseDate: string | Date;
   };
 };
 
 const HoverGameComponent = ({ game }: HoverGameComponentProps) => {
+  const router = useRouter();
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    window.location.reload();
+  };
+
   return (
-    <div className="group w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl border border-gray-100">
+    <div
+      onClick={handleCardClick}
+      className="group w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl border border-gray-100"
+    >
       <div className="relative h-96 w-full overflow-hidden bg-gray-200">
         <img
           src={game.image}
