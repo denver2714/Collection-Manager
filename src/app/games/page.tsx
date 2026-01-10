@@ -18,7 +18,8 @@ const Games = async () => {
       </div>
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {games.map((game) => (
-          <div
+          <Link
+            href={`/games/${game.id}`}
             key={game.id}
             className="rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition transform hover:scale-105"
           >
@@ -39,7 +40,7 @@ const Games = async () => {
                 </span>
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
