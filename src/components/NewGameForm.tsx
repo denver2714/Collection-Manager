@@ -1,6 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import BackButtonComponent from "./BackButtonComponent";
 
 interface GameForm {
   name: string;
@@ -34,15 +35,7 @@ const NewGameForm = () => {
 
   return (
     <div>
-      <div className="p-2">
-        <button
-          onClick={() => router.back()}
-          type="button"
-          className="rounded-lg border border-red-500 text-red-500 p-2 hover:bg-red-500 hover:text-white transition cursor-pointer"
-        >
-          Back
-        </button>
-      </div>
+      <BackButtonComponent />
 
       <div className="flex items-center justify-center min-h-screen space-x-4">
         <form
