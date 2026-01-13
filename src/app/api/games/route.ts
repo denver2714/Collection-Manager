@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { getAllGames, createGame } from "../../../../services/gamesService";
+import { gamesService } from "../../../../services/gamesService";
 import { HTTP_STATUS } from "../../../../utils/httpStatus";
 import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
-    const getGamesData = await getAllGames();
+    const getGamesData = await gamesService.getAllGames();
     return NextResponse.json(getGamesData, { status: HTTP_STATUS.OK });
   } catch (error) {
     console.error("GET HTTP method error: ", error);
@@ -19,7 +19,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const gameData = await req.json();
-    const createGameData = createGame(gameData);
+    const createGameData = gamesService.createGame(gameData);
     return NextResponse.json(createGameData, { status: HTTP_STATUS.CREATED });
   } catch (error) {
     console.error("POST HTTP method error: ", error);
