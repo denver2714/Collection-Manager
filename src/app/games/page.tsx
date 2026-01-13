@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { format } from "date-fns";
-import { getAllGames } from "../../../services/gamesService";
+import { gamesService } from "../../../services/gamesService";
 
 const Games = async () => {
-  const games = await getAllGames();
+  const games = await gamesService.getAllGames();
 
   return (
     <div className="p-8 md:p-12">

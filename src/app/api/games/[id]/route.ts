@@ -1,10 +1,6 @@
 import { NextResponse } from "next/server";
 import { HTTP_STATUS } from "../../../../../utils/httpStatus";
-import {
-  getGame,
-  editGame,
-  deleteGame,
-} from "../../../../../services/gamesService";
+import { gamesService } from "../../../../../services/gamesService";
 import { revalidatePath } from "next/cache";
 
 type ParamsType = {
@@ -22,7 +18,7 @@ export async function GET(req: Request, { params }: ParamsType) {
         { status: HTTP_STATUS.BAD_REQUEST }
       );
 
-    const game = await getGame(gameId);
+    const game = await gamesService.getGame(gameId);
 
     if (!game)
       return NextResponse.json(
@@ -52,7 +48,7 @@ export async function PUT(req: Request, { params }: ParamsType) {
 
     const { name, image, genre, releaseDate } = await req.json();
 
-    const editGameData = await editGame(
+    const editGameData = await gamesService.editGame(
       { name, image, genre, releaseDate },
       gameId
     );
@@ -86,7 +82,7 @@ export async function DELETE(req: Request, { params }: ParamsType) {
         { status: HTTP_STATUS.BAD_REQUEST }
       );
 
-    const deletedGameData = await deleteGame(gameId);
+    const deletedGameData = await gamesService.deleteGame(gameId);
 
     revalidatePath("/games");
     revalidatePath(`/games/${gameId}`);
