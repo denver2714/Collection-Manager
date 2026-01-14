@@ -27,5 +27,10 @@ _/uses/{id}/edit
 -Server Actions
 -Database SQLite Prisma [done]
 
+To clone this:
+(Dependencies)
+$ npm install prisma @types/node @types/better-sqlite3 --save-dev
+$ npm install @prisma/client @prisma/adapter-better-sqlite3
 
-
+create a .env file:
+DATABASE_URL="file:./dev.db"

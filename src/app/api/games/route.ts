@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { gamesService } from "../../../../services/gamesService";
+import * as gamesService from "../../../../services/gamesService";
 import { HTTP_STATUS } from "../../../../utils/httpStatus";
 import { revalidatePath } from "next/cache";
 
