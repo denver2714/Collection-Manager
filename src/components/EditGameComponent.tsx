@@ -1,48 +1,86 @@
 "use client";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import BackButtonComponent from "./BackButtonComponent";
 
-interface GameForm {
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import BackButtonComponent from "./BackButtonComponent";
+import { useRouter } from "next/navigation";
+
+interface EditGameProps {
   name: string;
   image: string;
   genre: string;
-  releaseDate: string;
+  releaseDate: string | Date;
 }
 
-const NewGameForm = () => {
+const EditGameComponent = ({ id }: { id: string }) => {
   const router = useRouter();
+
+  const gameId = Number(id);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<GameForm>();
+  } = useForm<EditGameProps>();
 
-  const onSubmit = async (data: GameForm) => {
-    console.log(data);
+  useEffect(() => {
+    const fetchGame = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/api/games/${gameId}`);
+        if (!res.ok) throw new Error("Error fetching game");
+        const data = await res.json();
+        const { name, image, genre, releaseDate } = data;
 
-    const res = await fetch("http://localhost:3000/api/games", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+        reset({
+          name,
+          image,
+          genre,
+          releaseDate: releaseDate?.slice(0, 10),
+        });
+      } catch (error) {
+        console.error("Error fetching game", error);
+      }
+    };
+    router;
 
+    fetchGame();
+  }, [gameId, reset]);
+
+  const onSubmit = async (data: EditGameProps) => {
+    try {
+      console.log(data);
+
+      const res = await fetch(`http://localhost:3000/api/games/${gameId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error("Error updating game", error);
+    }
+
+    router.push(`/games/${gameId}`);
     router.refresh();
-    router.back();
   };
 
   return (
     <div>
-      <BackButtonComponent />
+      <button
+        onClick={() => router.back()}
+        className="m-2 p-2 rounded-lg border border-red-500 text-red-500  hover:bg-red-500 hover:text-white transition cursor-pointer"
+        type="button"
+      >
+        Back
+      </button>
 
       <div className="flex items-center justify-center min-h-screen space-x-4">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full sm:max-w-md md:max-w-lg bg-white p-8 rounded-2xl shadow-md space-y-6"
         >
-          <h2 className="text-2xl font-bold text-gray-900">Add new Game</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Edit Game</h2>
 
           <div>
             <label
@@ -124,7 +162,7 @@ const NewGameForm = () => {
                 required: "Release Date is required",
                 validate: (value) => {
                   if (new Date(value) > new Date()) {
-                    return "Release date cannot be in the future";
+                    return "Released  date cannot be in the future";
                   }
                   return true;
                 },
@@ -137,9 +175,9 @@ const NewGameForm = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-green-600 text-white font-medium py-3 rounded-lg hover:bg-green-700 transition"
           >
-            Add Game
+            Update Game
           </button>
         </form>
       </div>
@@ -147,4 +185,4 @@ const NewGameForm = () => {
   );
 };
 
-export default NewGameForm;
+export default EditGameComponent;

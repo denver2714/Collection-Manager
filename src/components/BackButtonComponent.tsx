@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 const BackButtonComponent = () => {
   const router = useRouter();
   return (
-    <div className=" p-2">
+    <div className="p-2">
       <button
         onClick={() => router.back()}
         type="button"
