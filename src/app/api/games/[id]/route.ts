@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { HTTP_STATUS } from "../../../../../utils/httpStatus";
-import * as gamesService from "../../../../../services/gamesService";
+import { HTTP_STATUS } from "../../../../utils/httpStatus";
+import * as gamesService from "../../../../services/gamesService";
 import { revalidatePath } from "next/cache";
 
 type ParamsType = {

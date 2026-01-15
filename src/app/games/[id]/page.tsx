@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import BackButtonComponent from "@/components/BackButtonComponent";
 import Link from "next/link";
 import DeleteGameButton from "@/components/DeleteGameButton";
-import * as gamesService from "../../../../services/gamesService";
+import * as gamesService from "../../../services/gamesService";
 
 const GameId = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;

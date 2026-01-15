@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { format } from "date-fns";
-import * as gamesService from "../../../services/gamesService";
+import * as gamesService from "../../services/gamesService";
 
 const Games = async () => {
   const games = await gamesService.getAllGames();

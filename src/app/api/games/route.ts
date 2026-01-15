@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import * as gamesService from "../../../../services/gamesService";
-import { HTTP_STATUS } from "../../../../utils/httpStatus";
+import * as gamesService from "../../../services/gamesService";
+import { HTTP_STATUS } from "../../../utils/httpStatus";
 import { revalidatePath } from "next/cache";
 
 export async function GET() {
