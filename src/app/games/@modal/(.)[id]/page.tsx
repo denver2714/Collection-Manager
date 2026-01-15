@@ -1,6 +1,7 @@
 import HoverGameComponent from "@/components/HoverGameComponent";
 import ModalBackdrop from "@/components/ModalBackdrop";
 import prisma from "../../../../../lib/prisma";
+import { getGame } from "@/services/gamesService";
 
 const GameIdIntercepted = async ({
   params,
@@ -9,9 +10,7 @@ const GameIdIntercepted = async ({
 }) => {
   const { id } = await params;
   const gameId = Number(id);
-  const specificGame = await prisma.game.findUnique({
-    where: { id: gameId },
-  });
+  const specificGame = await getGame(gameId);
 
   if (!specificGame) {
     return (

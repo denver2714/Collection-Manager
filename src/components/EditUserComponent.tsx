@@ -39,6 +39,7 @@ const EditUserComponent = ({
 
     await actions.editUser(formData, uuid);
     router.back();
+    router.refresh();
   };
 
   return (

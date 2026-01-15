@@ -7,7 +7,7 @@ import React from "react";
 const NewGame = () => {
   return (
     <div>
-      <UsersFormComponent />
+      <NewGameForm />
     </div>
   );
 };
