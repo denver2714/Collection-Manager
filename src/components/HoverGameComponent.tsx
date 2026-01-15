@@ -32,7 +32,6 @@ const HoverGameComponent = ({ game }: HoverGameComponentProps) => {
         />
       </div>
 
-      {/* Content */}
       <div className="p-6">
         <div className="flex items-center justify-between mb-3">
           <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-indigo-700">

@@ -1,3 +1,4 @@
+import ModalBackdrop from "@/components/ModalBackdrop";
 import * as usersService from "@/services/usersService";
 
 const InterceptingId = async ({
@@ -9,10 +10,11 @@ const InterceptingId = async ({
   const user = await usersService.getUser(uuid);
 
   if (!user) return <div>User not found</div>;
+
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-6 flex items-center justify-center">
+    <ModalBackdrop>
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="relative h-48 bg-linear-to-r from-blue-500 to-purple-600">
+        <div className="relative h-48 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600">
           <div className="absolute -bottom-16 left-8">
             <img
               src={user?.image}
@@ -29,7 +31,7 @@ const InterceptingId = async ({
           <p className="text-slate-600 leading-relaxed">{user?.description}</p>
         </div>
       </div>
-    </div>
+    </ModalBackdrop>
   );
 };
 
