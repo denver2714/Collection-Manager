@@ -1,6 +1,5 @@
 "use client";
 import { format } from "date-fns";
-import { useRouter } from "next/navigation";
 
 type HoverGameComponentProps = {
   game: {
@@ -12,8 +11,6 @@ type HoverGameComponentProps = {
 };
 
 const HoverGameComponent = ({ game }: HoverGameComponentProps) => {
-  const router = useRouter();
-
   const handleCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     window.location.reload();

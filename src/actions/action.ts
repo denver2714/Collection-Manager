@@ -24,3 +24,7 @@ export async function editUser(formData: FormData, id: string) {
 
   await usersService.editUser({ name, description, image }, id);
 }
+
+export async function deleteUser(uuid: string) {
+  await usersService.deleteUser(uuid);
+}

@@ -1,5 +1,6 @@
 import { describe } from "node:test";
 import prisma from "../../lib/prisma";
+import { revalidatePath } from "next/cache";
 
 type UserType = {
   name: string;
@@ -23,6 +24,7 @@ export async function createUser(user: UserType) {
       image: user.image,
     },
   });
+  revalidatePath(`/users`);
 }
 
 export async function editUser(user: UserType, id: string) {
@@ -34,6 +36,7 @@ export async function editUser(user: UserType, id: string) {
       image: user.image,
     },
   });
+  revalidatePath(`/users`);
 }
 
 export async function getUser(id: string) {
@@ -42,4 +45,12 @@ export async function getUser(id: string) {
   });
 }
 
-export async function deleteUser() {}
+export async function deleteUser(uuid: string) {
+  return await prisma.user.delete({
+    where: {
+      id: uuid,
+    },
+  });
+
+  revalidatePath(`/users`);
+}
