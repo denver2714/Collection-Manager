@@ -5,20 +5,15 @@ const Edit = async ({ params }: { params: Promise<{ uuid: string }> }) => {
   const { uuid } = await params;
   const user = await usersService.getUser(uuid);
 
-  if (!user)
+  if (!user) {
     return (
-      <div className="flex items-center justify-center h-screen text-gray-500">
-        User not found
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">User not found</p>
       </div>
     );
+  }
 
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-  
-        <EditUserComponent uuid={uuid} user={user} />
-     
-    </div>
-  );
+  return <EditUserComponent uuid={uuid} user={user} />;
 };
 
 export default Edit;

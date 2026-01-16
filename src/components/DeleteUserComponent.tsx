@@ -3,6 +3,7 @@
 
 import * as actions from "@/actions/action";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const DeleteUserComponent = ({ uuid }: { uuid: string }) => {
   const router = useRouter();
@@ -17,12 +18,14 @@ const DeleteUserComponent = ({ uuid }: { uuid: string }) => {
   };
 
   return (
-    <button
+    <Button
       onClick={handleDelete}
-      className="px-2 rounded-lg border cursor-pointer hover:bg-black hover:text-white transition"
+      variant="destructive"
+      size="sm"
+      className="cursor-pointer"
     >
       Delete
-    </button>
+    </Button>
   );
 };
 

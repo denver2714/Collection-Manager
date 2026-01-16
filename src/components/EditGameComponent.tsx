@@ -2,8 +2,19 @@
 
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import BackButtonComponent from "./BackButtonComponent";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 interface EditGameProps {
   name: string;
@@ -14,19 +25,19 @@ interface EditGameProps {
 
 const EditGameComponent = ({ id }: { id: string }) => {
   const router = useRouter();
-
   const gameId = Number(id);
+
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<EditGameProps>();
 
   useEffect(() => {
     const fetchGame = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/games/${gameId}`);
+        const res = await fetch(`/api/games/${gameId}`);
         if (!res.ok) throw new Error("Error fetching game");
         const data = await res.json();
         const { name, image, genre, releaseDate } = data;
@@ -41,20 +52,15 @@ const EditGameComponent = ({ id }: { id: string }) => {
         console.error("Error fetching game", error);
       }
     };
-    router;
 
     fetchGame();
   }, [gameId, reset]);
 
   const onSubmit = async (data: EditGameProps) => {
     try {
-      console.log(data);
-
-      const res = await fetch(`http://localhost:3000/api/games/${gameId}`, {
+      await fetch(`/api/games/${gameId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
     } catch (error) {
@@ -66,121 +72,111 @@ const EditGameComponent = ({ id }: { id: string }) => {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => router.back()}
-        className="m-2 p-2 rounded-lg border border-red-500 text-red-500  hover:bg-red-500 hover:text-white transition cursor-pointer"
-        type="button"
-      >
-        Back
-      </button>
-
-      <div className="flex items-center justify-center min-h-screen space-x-4">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="w-full sm:max-w-md md:max-w-lg bg-white p-8 rounded-2xl shadow-md space-y-6"
-        >
-          <h2 className="text-2xl font-bold text-gray-900">Edit Game</h2>
-
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Enter game name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              {...register("name", {
-                required: "Name is required",
-              })}
-            />
-
-            {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
-            )}
+    <div className="min-h-screen">
+      <header className="border-b">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" onClick={() => router.back()}>
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-2xl font-bold tracking-tight">Edit Game</h1>
           </div>
+        </div>
+      </header>
 
-          <div>
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Image URL
-            </label>
-            <input
-              type="url"
-              id="image"
-              placeholder="Enter image URL"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              {...register("image", {
-                required: "Image is required",
-              })}
-            />
+      <main className="container mx-auto px-4 py-8 max-w-lg">
+        <Card>
+          <CardHeader>
+            <CardTitle>Game Details</CardTitle>
+            <CardDescription>
+              Update the game information below.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Enter game name"
+                  {...register("name", { required: "Name is required" })}
+                />
+                {errors.name && (
+                  <p className="text-sm text-destructive">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
 
-            {errors.image && (
-              <p className="text-red-500">{errors.image.message}</p>
-            )}
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="image">Image URL</Label>
+                <Input
+                  id="image"
+                  type="url"
+                  placeholder="https://example.com/image.jpg"
+                  {...register("image", { required: "Image URL is required" })}
+                />
+                {errors.image && (
+                  <p className="text-sm text-destructive">
+                    {errors.image.message}
+                  </p>
+                )}
+              </div>
 
-          <div>
-            <label
-              htmlFor="genre"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Genre
-            </label>
-            <input
-              type="text"
-              id="genre"
-              placeholder="Enter game genre"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              {...register("genre", {
-                required: "Genre is required",
-              })}
-            />
-            {errors.genre && (
-              <p className="text-red-500">{errors.genre.message}</p>
-            )}
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="genre">Genre</Label>
+                <Input
+                  id="genre"
+                  placeholder="e.g., Action, RPG, Strategy"
+                  {...register("genre", { required: "Genre is required" })}
+                />
+                {errors.genre && (
+                  <p className="text-sm text-destructive">
+                    {errors.genre.message}
+                  </p>
+                )}
+              </div>
 
-          <div>
-            <label
-              htmlFor="releaseDate"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Release Date
-            </label>
-            <input
-              type="date"
-              id="releaseDate"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-              {...register("releaseDate", {
-                required: "Release Date is required",
-                validate: (value) => {
-                  if (new Date(value) > new Date()) {
-                    return "Released  date cannot be in the future";
-                  }
-                  return true;
-                },
-              })}
-            />
-            {errors.releaseDate && (
-              <p className="text-red-500">{errors.releaseDate.message}</p>
-            )}
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="releaseDate">Release Date</Label>
+                <Input
+                  id="releaseDate"
+                  type="date"
+                  {...register("releaseDate", {
+                    required: "Release date is required",
+                    validate: (value) =>
+                      new Date(value) <= new Date() ||
+                      "Date cannot be in the future",
+                  })}
+                />
+                {errors.releaseDate && (
+                  <p className="text-sm text-destructive">
+                    {errors.releaseDate.message}
+                  </p>
+                )}
+              </div>
 
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white font-medium py-3 rounded-lg hover:bg-green-700 transition"
-          >
-            Update Game
-          </button>
-        </form>
-      </div>
+              <div className="flex gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => router.back()}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex-1"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Saving..." : "Save Changes"}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </main>
     </div>
   );
 };

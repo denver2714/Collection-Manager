@@ -1,5 +1,13 @@
 "use client";
 import { format } from "date-fns";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 type HoverGameComponentProps = {
   game: {
@@ -17,35 +25,29 @@ const HoverGameComponent = ({ game }: HoverGameComponentProps) => {
   };
 
   return (
-    <div
+    <Card
       onClick={handleCardClick}
-      className="group w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl border border-gray-100"
+      className="w-full max-w-2xl overflow-hidden cursor-pointer"
     >
-      <div className="relative h-96 w-full overflow-hidden bg-gray-200">
+      <div className="aspect-video w-full overflow-hidden bg-muted">
         <img
           src={game.image}
           alt={game.name}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-cover"
         />
       </div>
-
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-3">
-          <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-indigo-700">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-2xl">{game.name}</CardTitle>
+          <span className="text-xs font-medium bg-primary/10 text-primary px-2 py-1 rounded-md">
             {game.genre}
           </span>
         </div>
-
-        <h3 className="text-2xl font-bold text-gray-900 leading-tight">
-          {game.name}
-        </h3>
-
-        <div className="mt-4 flex items-center text-sm text-gray-500">
-          <span className="font-medium text-gray-400 mr-2">Release Date:</span>
-          <span>{format(game.releaseDate, "MMMM do, yyyy")}</span>
-        </div>
-      </div>
-    </div>
+        <CardDescription>
+          Released on {format(game.releaseDate, "MMMM d, yyyy")}
+        </CardDescription>
+      </CardHeader>
+    </Card>
   );
 };
 

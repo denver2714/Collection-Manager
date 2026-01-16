@@ -1,23 +1,27 @@
 import Link from "next/link";
-import React from "react";
+import { Button } from "@/components/ui/button";
 
 const GamesAndUsersTab = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="flex rounded-xl bg-white p-2 shadow-md">
-        <Link
-          href="/games"
-          className="rounded-lg px-6 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-black"
-        >
-          Games
-        </Link>
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="text-center space-y-8">
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold tracking-tight">
+            Collection Manager
+          </h1>
+          <p className="text-muted-foreground">
+            Manage your games and users in one place.
+          </p>
+        </div>
 
-        <Link
-          href="/users"
-          className="rounded-lg px-6 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-black"
-        >
-          Users
-        </Link>
+        <div className="flex gap-4 justify-center">
+          <Button asChild size="lg">
+            <Link href="/games">Browse Games</Link>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/users">Browse Users</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

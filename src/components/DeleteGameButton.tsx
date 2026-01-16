@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 type idType = {
   id: string;
@@ -22,14 +23,9 @@ const DeleteGameButton = ({ id }: idType) => {
   };
 
   return (
-    <div>
-      <button
-        onClick={handleDelete}
-        className="px-5 py-2 rounded-xl border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition font-bold cursor-pointer"
-      >
-        Delete
-      </button>
-    </div>
+    <Button onClick={handleDelete} variant="destructive">
+      Delete
+    </Button>
   );
 };
 

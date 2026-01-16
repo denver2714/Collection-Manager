@@ -3,7 +3,18 @@
 import * as actions from "@/actions/action";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import BackButtonUserComponent from "./BackButtonUserComponent";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
 
 type FormValues = {
   name: string;
@@ -43,50 +54,69 @@ const EditUserComponent = ({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-2 border border-gray-500 shadow-2xl p-12 rounded-lg"
-    >
-      <div>
-        <label className="block text-sm font-medium text-slate-700">Name</label>
-        <input
-          {...register("name", { required: true })}
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-900"
-        />
-      </div>
+    <div className="min-h-screen">
+      <header className="border-b">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" onClick={() => router.back()}>
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-2xl font-bold tracking-tight">Edit User</h1>
+          </div>
+        </div>
+      </header>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-700">
-          Description
-        </label>
-        <textarea
-          {...register("description", { required: true })}
-          rows={4}
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-900"
-        />
-      </div>
+      <main className="container mx-auto px-4 py-8 max-w-lg">
+        <Card>
+          <CardHeader>
+            <CardTitle>User Details</CardTitle>
+            <CardDescription>
+              Update the user information below.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" {...register("name", { required: true })} />
+              </div>
 
-      <div>
-        <label className="block text-sm font-medium text-slate-700">
-          Image URL
-        </label>
-        <input
-          {...register("image", { required: true })}
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-900"
-        />
-      </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  rows={4}
+                  {...register("description", { required: true })}
+                />
+              </div>
 
-      <div className="flex justify-end gap-3 pt-4">
-        <BackButtonUserComponent />
-        <button
-          type="submit"
-          className="rounded-xl bg-slate-900 px-6 py-2 text-sm font-medium text-white hover:bg-slate-800 transition"
-          disabled={formState.isSubmitting}
-        >
-          {formState.isSubmitting ? "Saving..." : "Save changes"}
-        </button>
-      </div>
-    </form>
+              <div className="space-y-2">
+                <Label htmlFor="image">Image URL</Label>
+                <Input id="image" {...register("image", { required: true })} />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => router.back()}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="flex-1"
+                  disabled={formState.isSubmitting}
+                >
+                  {formState.isSubmitting ? "Saving..." : "Save Changes"}
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </main>
+    </div>
   );
 };
 

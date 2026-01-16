@@ -1,51 +1,75 @@
-import BackButtonUserComponent from "@/components/BackButtonUserComponent";
-import DeleteUserComponent from "@/components/DeleteUserComponent";
-import EditButtonUserComponent from "@/components/EditButtonUserComponent";
 import * as usersService from "@/services/usersService";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
+import DeleteUserComponent from "@/components/DeleteUserComponent";
 
 const UserId = async ({ params }: { params: Promise<{ uuid: string }> }) => {
   const { uuid } = await params;
   const user = await usersService.getUser(uuid);
 
-  if (!user) return <div>User not found</div>;
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">User not found</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <div className="p-2">
-        <BackButtonUserComponent />
-      </div>
-
-      <div className="min-h-screen  flex items-center justify-center p-6">
-        <div className="relative max-w-2xl w-full rounded-3xl bg-white/80 backdrop-blur shadow-2xl overflow-hidden">
-          <div
-            className="relative h-52 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600
-"
-          >
-            <div className="absolute inset-0 bg-black/10" />
-
-            <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
-              <img
-                src={user?.image}
-                alt={user?.name}
-                className="w-36 h-36 rounded-full border-4 border-white shadow-xl object-cover"
-              />
-            </div>
-          </div>
-
-          <div className="pt-24 px-8 pb-10 text-center">
-            <h1 className="text-3xl font-bold text-slate-900">{user?.name}</h1>
-
-            <p className="mt-6 text-slate-600 leading-relaxed max-w-xl mx-auto">
-              {user?.description || "No description provided."}
-            </p>
-
-            <div className="mt-8 flex justify-center gap-4">
-              <EditButtonUserComponent uuid={user.id} />
-              <DeleteUserComponent uuid={user.id}/>
-            </div>
+    <div className="min-h-screen">
+      <header className="border-b">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/users">
+                <ArrowLeft className="h-5 w-5" />
+              </Link>
+            </Button>
+            <h1 className="text-2xl font-bold tracking-tight">User Profile</h1>
           </div>
         </div>
-      </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-8 max-w-2xl">
+        <Card className="overflow-hidden">
+          <div className="h-32 bg-gradient-to-r from-slate-800 via-slate-700 to-slate-600" />
+
+          <div className="relative px-6 pb-6">
+            <div className="absolute -top-16 left-6">
+              <img
+                src={user.image}
+                alt={user.name}
+                className="w-32 h-32 rounded-full border-4 border-background shadow-lg object-cover"
+              />
+            </div>
+
+            <div className="pt-20">
+              <CardTitle className="text-2xl">{user.name}</CardTitle>
+              <CardDescription className="mt-4 text-base">
+                {user.description || "No description provided."}
+              </CardDescription>
+
+              <div className="mt-6 flex gap-3">
+                <Button asChild>
+                  <Link href={`/users/${user.id}/edit`}>
+                    <Pencil className="h-4 w-4 mr-2" />
+                    Edit Profile
+                  </Link>
+                </Button>
+                <DeleteUserComponent uuid={user.id} />
+              </div>
+            </div>
+          </div>
+        </Card>
+      </main>
     </div>
   );
 };
