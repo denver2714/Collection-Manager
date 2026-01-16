@@ -2,7 +2,7 @@
 
 A modern full-stack web application for managing games and users collections, built with **Next.js 16**, **React 19**, and **Prisma** with SQLite.
 
-> 📚 _This project was created to practice and demonstrate full-stack development skills with the latest Next.js features._
+> 📚 _I made this project to practice full-stack development. I combined API routes and server actions because these are industry standard practices._
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat-square&logo=react)
@@ -239,38 +239,6 @@ model User {
 6. **Open your browser**
 
    Navigate to [http://localhost:3000](http://localhost:3000)
-
----
-
-## 📜 Available Scripts
-
-| Command              | Description                             |
-| -------------------- | --------------------------------------- |
-| `npm run dev`        | Start development server with Turbopack |
-| `npm run build`      | Build for production                    |
-| `npm run start`      | Start production server                 |
-| `npm run lint`       | Run ESLint                              |
-| `npx prisma studio`  | Open Prisma database GUI                |
-| `npx prisma db push` | Push schema changes to database         |
-
----
-
-## 🔮 Roadmap
-
-- [ ] User authentication
-- [ ] Image upload functionality
-- [ ] Search and filtering
-- [ ] Pagination
-- [ ] Dark mode toggle
-- [ ] Unit & integration tests
-- [ ] API rate limiting
-- [ ] Export/Import data
-
----
-
-## 📝 License
-
-This project is for educational purposes.
 
 ---
 
