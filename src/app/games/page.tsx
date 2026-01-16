@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { format } from "date-fns";
 import * as gamesService from "../../services/gamesService";
+import { MdHome } from "react-icons/md";
 
 const Games = async () => {
   const games = await gamesService.getAllGames();
@@ -8,7 +9,15 @@ const Games = async () => {
   return (
     <div className="p-8 md:p-12">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-4xl font-bold text-gray-900">Games</h1>
+        <div>
+          <Link className="flex items-center gap-2" href={"/"}>
+            <MdHome
+              size={32}
+              className="hover:bg-gray-500 rounded-lg transition"
+            />
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Games</h1>
+          </Link>
+        </div>
         <Link
           href={"/games/new"}
           className="border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium px-6 py-2 rounded-lg transition duration-200"

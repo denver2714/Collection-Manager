@@ -1,5 +1,6 @@
 import { getAllUser } from "@/services/usersService";
 import Link from "next/link";
+import { MdHome } from "react-icons/md";
 
 const Users = async () => {
   const users = await getAllUser();
@@ -7,7 +8,15 @@ const Users = async () => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-        <h1 className="text-4xl font-bold mb-4 sm:mb-0">Users</h1>
+        <div>
+          <Link className="flex items-center gap-2" href={"/"}>
+            <MdHome
+              size={32}
+              className="hover:bg-gray-500 rounded-lg transition"
+            />
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">Users</h1>
+          </Link>
+        </div>
         <Link
           href={`/users/new`}
           className="border border-blue-500 text-blue-500 rounded-lg px-4 py-2 hover:bg-blue-50 transition"
