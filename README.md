@@ -9,6 +9,7 @@ A full-stack web application for managing collections of games and users. Built 
 ![Prisma](https://img.shields.io/badge/Prisma-7.2.0-2D3748?style=flat-square&logo=prisma)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-06B6D4?style=flat-square&logo=tailwindcss)
+![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-latest-000000?style=flat-square)
 
 ---
 
@@ -35,6 +36,7 @@ A full-stack web application for managing collections of games and users. Built 
 - **Server Components** for optimal performance
 - **Parallel Routes** for modal overlays
 - **Intercepting Routes** for seamless navigation
+- **shadcn/ui Components** for a clean, professional UI
 - **Responsive Design** with Tailwind CSS
 - **SQLite Database** with Prisma ORM
 
