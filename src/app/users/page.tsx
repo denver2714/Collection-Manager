@@ -18,7 +18,7 @@ const Users = async () => {
           </Link>
         </div>
         <Link
-          href={`/users/new`}
+          href={"/users/new"}
           className="border border-blue-500 text-blue-500 rounded-lg px-4 py-2 hover:bg-blue-50 transition"
         >
           New User
