@@ -1,173 +1,103 @@
 # Collection Manager
 
-A full-stack web application for managing collections of games and users. Built with **Next.js 16**, **React 19**, and **Prisma** with SQLite.
+A full-stack web app for managing your game library and user profiles. Built because I wanted to get my hands dirty with Next.js 16's new features and actually understand how server components, parallel routes, and all that jazz work together.
 
-> I made this project to practice full-stack development. I combined API routes and server actions because these are industry standard practices.
-
-![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?style=flat-square&logo=next.js)
-![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat-square&logo=react)
-![Prisma](https://img.shields.io/badge/Prisma-7.2.0-2D3748?style=flat-square&logo=prisma)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.x-06B6D4?style=flat-square&logo=tailwindcss)
+**Tech:** Next.js 16 • React 19 • Prisma • SQLite • TypeScript • Tailwind CSS
 
 ---
 
-## Features
+## What It Does
 
-### Games Management
+This is a CRUD app with two main sections: games and users. Nothing fancy, but it covers the fundamentals pretty well.
 
-- View all games in a responsive grid layout
-- Add new games with name, image, genre, and release date
-- Edit existing game details
-- Delete games
-- Quick preview with intercepting modal routes
+**Games side:**
+- Browse your game collection in a grid
+- Add new games (name, cover image, genre, release date)
+- Edit game details when you inevitably typo something
+- Delete games you don't want anymore
+- Quick preview modals using Next.js intercepting routes
 
-### Users Management
-
-- View all users with profile cards
-- Create new user profiles
-- Edit user information
+**Users side:**
+- View user profiles in cards
+- Create and edit user accounts
 - Delete users
-- Quick preview with intercepting modal routes
+- Same modal preview system as games
 
-### Technical Highlights
-
-- **Server Components** for optimal performance
-- **Parallel Routes** for modal overlays
-- **Intercepting Routes** for seamless navigation
-- **Responsive Design** with Tailwind CSS
-- **SQLite Database** with Prisma ORM
+The interesting part (at least for me) was combining API routes with server actions. Some people say pick one or the other, but in real projects you'll probably use both, so I did too.
 
 ---
 
-## Architecture
+## How It's Built
 
-### Application Flow
+### The Flow
+
+Your browser hits the Next.js app router, which serves up server components for the main pages. When you click on a game or user, intercepting routes catch that navigation and show a modal instead. All the data operations go through a service layer that talks to Prisma, which handles the SQLite database.
 
 ```mermaid
 flowchart TB
-    subgraph Client["Client Browser"]
-        Landing["Landing Page"]
-        GamesPage["Games List"]
-        UsersPage["Users List"]
-    end
-
-    subgraph Routes["Next.js App Router"]
-        direction TB
-        GamesRoutes["Games Routes"]
-        UsersRoutes["Users Routes"]
-        API["API Routes"]
-    end
-
-    subgraph Modal["Parallel Routes"]
-        GameModal["Game Preview Modal"]
-        UserModal["User Preview Modal"]
-    end
-
-    subgraph Services["Service Layer"]
-        GamesService["gamesService.ts"]
-        UsersService["usersService.ts"]
-    end
-
-    subgraph Database["Database"]
-        Prisma["Prisma ORM"]
-        SQLite["SQLite"]
-    end
-
-    Landing --> GamesPage
-    Landing --> UsersPage
-
-    GamesPage --> GamesRoutes
-    UsersPage --> UsersRoutes
-
-    GamesRoutes --> GameModal
-    UsersRoutes --> UserModal
-
-    GamesRoutes --> API
-    UsersRoutes --> API
-
-    API --> GamesService
-    API --> UsersService
-
-    GamesService --> Prisma
-    UsersService --> Prisma
-
-    Prisma --> SQLite
+    Client[Browser] --> Router[Next.js App Router]
+    Router --> Games[Games Pages]
+    Router --> Users[Users Pages]
+    Games --> Modals[Parallel Route Modals]
+    Users --> Modals
+    Router --> API[API Routes]
+    API --> Services[Service Layer]
+    Services --> Prisma[Prisma ORM]
+    Prisma --> DB[SQLite Database]
 ```
 
-### Route Structure
+### Route Setup
 
-```mermaid
-flowchart LR
-    subgraph Games["/games"]
-        G1["/games"] --> G2["/games/new"]
-        G1 --> G3["/games/[id]"]
-        G3 --> G4["/games/[id]/edit"]
-        G1 -.->|intercept| GM["@modal/(.)[id]"]
-    end
+The routing uses Next.js 16's pattern for modals and overlays:
 
-    subgraph Users["/users"]
-        U1["/users"] --> U2["/users/new"]
-        U1 --> U3["/users/[uuid]"]
-        U3 --> U4["/users/[uuid]/edit"]
-        U1 -.->|intercept| UM["@modal/(.)[uuid]"]
-    end
+```
+/games
+├── /games/new              # Add a game
+├── /games/[id]             # View game details
+├── /games/[id]/edit        # Edit a game
+└── @modal/(.)[id]          # Modal overlay (intercepting route)
+
+/users
+├── /users/new              # Add a user
+├── /users/[uuid]           # View user profile
+├── /users/[uuid]/edit      # Edit user
+└── @modal/(.)[uuid]        # Modal overlay (intercepting route)
 ```
 
 ---
 
-## Project Structure
+## Project Layout
 
 ```
 collection-manager/
 ├── prisma/
-│   └── schema.prisma        # Database schema
+│   └── schema.prisma          # Database models
 ├── src/
-│   ├── actions/             # Server Actions
+│   ├── actions/               # Server actions for mutations
 │   ├── app/
-│   │   ├── api/             # API Routes
-│   │   │   ├── games/       # Games CRUD endpoints
-│   │   │   └── users/       # Users CRUD endpoints
+│   │   ├── api/               # REST endpoints
+│   │   │   ├── games/
+│   │   │   └── users/
 │   │   ├── games/
-│   │   │   ├── @modal/      # Parallel route for modals
-│   │   │   │   ├── (.)[id]/ # Intercepting route
-│   │   │   │   └── (.)new/  # New game modal slot
-│   │   │   ├── [id]/        # Game detail & edit
-│   │   │   └── new/         # New game form
+│   │   │   ├── @modal/        # Modal slot
+│   │   │   ├── [id]/
+│   │   │   └── new/
 │   │   └── users/
-│   │       ├── @modal/      # Parallel route for modals
-│   │       │   ├── (.)[uuid]/ # Intercepting route
-│   │       │   └── (.)new/  # New user modal slot
-│   │       ├── [uuid]/      # User detail & edit
-│   │       └── new/         # New user form
-│   ├── components/          # Reusable UI components
-│   ├── services/            # Database service layer
-│   └── utils/               # Utility functions
-├── lib/
-│   └── prisma.ts            # Prisma client instance
-└── generated/
-    └── prisma/              # Generated Prisma client
+│   │       ├── @modal/        # Modal slot
+│   │       ├── [uuid]/
+│   │       └── new/
+│   ├── components/            # Shared UI components
+│   ├── services/              # Database logic
+│   └── utils/
+└── lib/
+    └── prisma.ts              # Prisma client singleton
 ```
 
 ---
 
-## Tech Stack
-
-| Category            | Technology                  |
-| ------------------- | --------------------------- |
-| **Framework**       | Next.js 16.1.1 (App Router) |
-| **Frontend**        | React 19.2.3                |
-| **Styling**         | Tailwind CSS 4.x            |
-| **Language**        | TypeScript 5.x              |
-| **Database**        | SQLite                      |
-| **ORM**             | Prisma 7.2.0                |
-| **Forms**           | React Hook Form 7.70        |
-| **Icons**           | React Icons 5.5             |
-| **Date Formatting** | date-fns 4.1                |
-
----
-
 ## Database Schema
+
+Pretty straightforward. Games have auto-incrementing IDs, users get UUIDs.
 
 ```prisma
 model Game {
@@ -192,55 +122,43 @@ model User {
 
 ---
 
-## Getting Started
+## Running This Thing
 
-### Prerequisites
+**You'll need:**
+- Node.js 18 or higher
+- npm, yarn, or whatever package manager you prefer
 
-- Node.js 18+
-- npm or yarn
+**Setup:**
 
-### Installation
+```bash
+# Clone it
+git clone https://github.com/denver2714/collection-manager.git
+cd collection-manager
 
-1. **Clone the repository**
+# Install packages
+npm install
 
-   ```bash
-   git clone https://github.com/denver2714/collection-manager.git
-   cd collection-manager
-   ```
+# Create .env file with this line:
+# DATABASE_URL="file:./dev.db"
 
-2. **Install dependencies**
+# Set up the database
+npx prisma generate
+npx prisma db push
 
-   ```bash
-   npm install
-   ```
+# Start the dev server
+npm run dev
+```
 
-3. **Set up environment variables**
-
-   Create a `.env` file in the root directory:
-
-   ```env
-   DATABASE_URL="file:./dev.db"
-   ```
-
-4. **Initialize the database**
-
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
-
-5. **Run the development server**
-
-   ```bash
-   npm run dev
-   ```
-
-6. **Open your browser**
-
-   Navigate to [http://localhost:3000](http://localhost:3000)
+Then open http://localhost:3000 in your browser.
 
 ---
 
-<p align="center">
-  Made with Next.js
-</p>
+## Why I Built This
+
+I wanted to practice full-stack development with modern Next.js patterns. The app router, server components, server actions, and all the new routing features felt confusing at first, so I made something simple enough to understand but complete enough to be useful.
+
+The parallel routes for modals were the trickiest part to wrap my head around, but once you see it working, it makes sense. Same with mixing API routes and server actions—some tutorials tell you to only use one approach, but in practice you'll probably need both depending on the situation.
+
+---
+
+**Built with Next.js and a lot of documentation reading.**
