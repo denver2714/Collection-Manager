@@ -242,5 +242,5 @@ model User {
 ---
 
 <p align="center">
-  Made with Next.js
+  Made with Next.js❣️
 </p>
