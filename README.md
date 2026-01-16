@@ -1,8 +1,8 @@
 # Collection Manager
 
-A full-stack web application for managing collections of games and users. Built with **Next.js 16**, **React 19**, and **Prisma** with SQLite.
+A full-stack web CRUD application for managing collections of games and users. Built with **Next.js 16**, **React 19**, and **Prisma** with SQLite.
 
-> I made this project to practice full-stack development. I combined API routes and server actions because these are industry standard practices, it was fun and I learned alot, will be doing fullstack projects again.
+> I made this project to practice CRUD full-stack development. I combined API routes and server actions because these are industry standard practices, it was fun and I learned alot, will be doing fullstack projects again.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat-square&logo=react)
@@ -242,5 +242,5 @@ model User {
 ---
 
 <p align="center">
-  Made with Next.js❣️
+  Built with Next.js and a lot of documentation reading.❤️
 </p>
