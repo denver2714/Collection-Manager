@@ -1,8 +1,8 @@
-# 🎮 Collection Manager
+# Collection Manager
 
-A modern full-stack web application for managing games and users collections, built with **Next.js 16**, **React 19**, and **Prisma** with SQLite.
+A full-stack web application for managing collections of games and users. Built with **Next.js 16**, **React 19**, and **Prisma** with SQLite.
 
-> 📚 _I made this project to practice full-stack development. I combined API routes and server actions because these are industry standard practices._
+> I made this project to practice full-stack development. I combined API routes and server actions because these are industry standard practices.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat-square&logo=react)
@@ -12,67 +12,66 @@ A modern full-stack web application for managing games and users collections, bu
 
 ---
 
-## ✨ Features
+## Features
 
 ### Games Management
 
-- 📋 View all games in a responsive grid layout
-- ➕ Add new games with name, image, genre, and release date
-- ✏️ Edit existing game details
-- 🗑️ Delete games
-- 🔍 Quick preview with intercepting modal routes
+- View all games in a responsive grid layout
+- Add new games with name, image, genre, and release date
+- Edit existing game details
+- Delete games
+- Quick preview with intercepting modal routes
 
 ### Users Management
 
-- 👥 View all users with profile cards
-- ➕ Create new user profiles
-- ✏️ Edit user information
-- 🗑️ Delete users
-- 🔍 Quick preview with intercepting modal routes
+- View all users with profile cards
+- Create new user profiles
+- Edit user information
+- Delete users
+- Quick preview with intercepting modal routes
 
 ### Technical Highlights
 
-- ⚡ **Server Components** for optimal performance
-- 🚀 **Parallel Routes** for modal overlays
-- 🔀 **Intercepting Routes** for seamless navigation
-- 📱 **Responsive Design** with Tailwind CSS
-- 🗃️ **SQLite Database** with Prisma ORM
-- 🎨 **Modern UI** with smooth transitions
+- **Server Components** for optimal performance
+- **Parallel Routes** for modal overlays
+- **Intercepting Routes** for seamless navigation
+- **Responsive Design** with Tailwind CSS
+- **SQLite Database** with Prisma ORM
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ### Application Flow
 
 ```mermaid
 flowchart TB
-    subgraph Client["🌐 Client Browser"]
-        Landing["🏠 Landing Page"]
-        GamesPage["🎮 Games List"]
-        UsersPage["👥 Users List"]
+    subgraph Client["Client Browser"]
+        Landing["Landing Page"]
+        GamesPage["Games List"]
+        UsersPage["Users List"]
     end
 
-    subgraph Routes["📂 Next.js App Router"]
+    subgraph Routes["Next.js App Router"]
         direction TB
         GamesRoutes["Games Routes"]
         UsersRoutes["Users Routes"]
         API["API Routes"]
     end
 
-    subgraph Modal["🪟 Parallel Routes (@modal)"]
+    subgraph Modal["Parallel Routes"]
         GameModal["Game Preview Modal"]
         UserModal["User Preview Modal"]
     end
 
-    subgraph Services["⚙️ Service Layer"]
+    subgraph Services["Service Layer"]
         GamesService["gamesService.ts"]
         UsersService["usersService.ts"]
     end
 
-    subgraph Database["🗃️ Database"]
+    subgraph Database["Database"]
         Prisma["Prisma ORM"]
-        SQLite["SQLite Database"]
+        SQLite["SQLite"]
     end
 
     Landing --> GamesPage
@@ -100,14 +99,14 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    subgraph Games["🎮 /games"]
+    subgraph Games["/games"]
         G1["/games"] --> G2["/games/new"]
         G1 --> G3["/games/[id]"]
         G3 --> G4["/games/[id]/edit"]
         G1 -.->|intercept| GM["@modal/(.)[id]"]
     end
 
-    subgraph Users["👥 /users"]
+    subgraph Users["/users"]
         U1["/users"] --> U2["/users/new"]
         U1 --> U3["/users/[uuid]"]
         U3 --> U4["/users/[uuid]/edit"]
@@ -117,7 +116,7 @@ flowchart LR
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 collection-manager/
@@ -152,7 +151,7 @@ collection-manager/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category            | Technology                  |
 | ------------------- | --------------------------- |
@@ -168,7 +167,7 @@ collection-manager/
 
 ---
 
-## 📊 Database Schema
+## Database Schema
 
 ```prisma
 model Game {
@@ -193,7 +192,7 @@ model User {
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -205,7 +204,7 @@ model User {
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/collection-manager.git
+   git clone https://github.com/denver2714/collection-manager.git
    cd collection-manager
    ```
 
@@ -243,5 +242,5 @@ model User {
 ---
 
 <p align="center">
-  Made with ❤️ using Next.js
+  Made with Next.js
 </p>
