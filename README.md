@@ -1,5 +1,5 @@
 
-> I made this project to practice CRUD full-stack development No AI. I combined API routes and server actions because these are industry standard practices, it was fun and I learned alot as well documentation reading, will be doing fullstack projects again.
+> NO AI! I made this project to practice CRUD full-stack development. I combined API routes and server actions because these are industry standard practices, it was fun and I learned alot as well documentation reading, will be doing fullstack projects again.
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.1.1-black?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat-square&logo=react)
